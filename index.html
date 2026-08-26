@@ -34,7 +34,6 @@
             padding: 20px;
         }
 
-        /* Card Container & 3D Effect */
         .card-container {
             position: relative;
             perspective: 1500px;
@@ -50,7 +49,6 @@
             cursor: pointer;
         }
 
-        /* Open State Positioning */
         .card-container.open {
             transform: translateX(190px);
         }
@@ -60,7 +58,6 @@
             cursor: default;
         }
 
-        /* Card Sides */
         .card-face {
             position: absolute;
             width: 100%;
@@ -72,7 +69,6 @@
             overflow: hidden;
         }
 
-        /* FRONT COVER (Image 1) */
         .card-front {
             display: flex;
             align-items: center;
@@ -86,7 +82,6 @@
             object-fit: cover;
         }
 
-        /* INSIDE SPREAD */
         .card-back {
             transform: rotateY(180deg);
             display: flex;
@@ -106,6 +101,7 @@
             position: relative;
             overflow: hidden;
             box-shadow: var(--shadow);
+            flex-shrink: 0;
         }
 
         .page-left {
@@ -117,7 +113,7 @@
 
         .page-right {
             border-radius: 0 8px 8px 0;
-            background-image: url('4[1].jpg');
+            background-image: url('4[1].png');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -127,7 +123,6 @@
             padding-bottom: 25px;
         }
 
-        /* LEFT PAGE: POP-OUT LETTER (Image 3) */
         .letter-container {
             position: absolute;
             width: 260px;
@@ -149,7 +144,6 @@
             transition: transform 0.3s ease;
         }
 
-        /* Letter Lifted/Expanded State */
         .letter-container.lifted {
             transform: translate(-50%, -50%) scale(1.22);
             z-index: 50;
@@ -159,7 +153,6 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
-        /* RIGHT PAGE: FLAMES & CONTROLS */
         .flame-container {
             position: absolute;
             top: 260px;
@@ -192,7 +185,6 @@
             100% { transform: scale(1.08) rotate(3deg); }
         }
 
-        /* Controls Panel */
         .controls-panel {
             width: 85%;
             display: flex;
@@ -236,13 +228,8 @@
             transition: background 0.2s, transform 0.1s;
         }
 
-        .btn:hover {
-            background: #415a77;
-        }
-
-        .btn:active {
-            transform: scale(0.96);
-        }
+        .btn:hover { background: #415a77; }
+        .btn:active { transform: scale(0.96); }
 
         .btn-back {
             position: absolute;
@@ -253,11 +240,8 @@
             display: none;
         }
 
-        .card-container.open ~ .btn-back {
-            display: block;
-        }
+        .card-container.open ~ .btn-back { display: block; }
 
-        /* Wish Celebration Message Overlay */
         .wish-message {
             position: absolute;
             top: 40%;
@@ -283,7 +267,6 @@
             pointer-events: auto;
         }
 
-        /* Canvas Confetti Layer */
         #confetti-canvas {
             position: absolute;
             top: 0;
@@ -302,26 +285,20 @@
     <div class="card-container" id="cardContainer">
         <div class="card" id="card">
             
-            <!-- FRONT COVER (Image 1) -->
             <div class="card-face card-front" id="cardCover">
                 <img class="cover-img" src="1[1].png" alt="Sooraj Cover">
             </div>
 
-            <!-- INSIDE TWO-PAGE SPREAD -->
             <div class="card-face card-back">
-                
-                <!-- LEFT PAGE: ENVELOPE BASE (Image 2) & LETTER (Image 3) -->
                 <div class="page page-left">
                     <div class="letter-container" id="letterContainer" title="Click to read letter">
-                        <img class="letter-img" src="3[1].jpg" alt="Birthday Letter">
+                        <img class="letter-img" src="3[1].png" alt="Birthday Letter">
                     </div>
                 </div>
 
-                <!-- RIGHT PAGE: CAKE (Image 4) & INTERACTIVE CANDLES -->
                 <div class="page page-right">
                     <canvas id="confetti-canvas"></canvas>
 
-                    <!-- Interactive Animated Flames Aligned to Cake Candles -->
                     <div class="flame-container">
                         <div class="flame" id="flame1"></div>
                         <div class="flame" id="flame2"></div>
@@ -337,16 +314,13 @@
                         <button class="btn" id="relightBtn" style="display: none; background: #e07a5f;">Relight Candles 🕯️</button>
                     </div>
 
-                    <!-- Wish Overlay -->
                     <div class="wish-message" id="wishMsg">
                         🎉 HAPPY 18TH BIRTHDAY! 🎉<br>
                         <span style="font-size: 0.85rem; color: #415a77; font-weight: normal; margin-top: 5px; display: block;">
                             Destroy your journey as an adult! ✨
                         </span>
                     </div>
-
                 </div>
-
             </div>
 
         </div>
@@ -374,7 +348,6 @@
         let blowStartTime = null;
         let candlesOut = false;
 
-        // 1. OPEN / CLOSE CARD
         cardCover.addEventListener('click', () => {
             cardContainer.classList.add('open');
             initMic();
@@ -385,13 +358,11 @@
             letterContainer.classList.remove('lifted');
         });
 
-        // 2. LETTER LIFT INTERACTION
         letterContainer.addEventListener('click', (e) => {
             e.stopPropagation();
             letterContainer.classList.toggle('lifted');
         });
 
-        // 3. WEB AUDIO MIC BLOW DETECTION
         async function initMic() {
             if (audioCtx) return;
             try {
@@ -454,7 +425,6 @@
             }
         }
 
-        // 4. MANUAL BUTTON & SPACEBAR FALLBACK
         let isBlowingHandledByButton = false;
         let buttonBlowInterval;
 
@@ -491,7 +461,6 @@
             if (e.code === 'Space') stopManualBlow();
         });
 
-        // 5. EXTINGUISH & CELEBRATE
         function extinguishCandles() {
             candlesOut = true;
             flames.forEach(f => f.classList.add('out'));
@@ -513,7 +482,6 @@
             if (analyser) listenToMic();
         });
 
-        // 6. CANVAS CONFETTI
         let confettiParticles = [];
 
         function triggerConfetti() {
