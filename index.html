@@ -34,7 +34,6 @@
             padding: 10px;
         }
 
-        /* Container scales cleanly to prevent laptop screen cutoff */
         .card-container {
             position: relative;
             perspective: 1500px;
@@ -52,7 +51,6 @@
             cursor: pointer;
         }
 
-        /* Responsive resize for laptop resolution fit */
         @media (max-height: 700px), (max-width: 800px) {
             .card {
                 width: 280px;
@@ -125,12 +123,12 @@
             height: 100%;
             object-fit: cover;
             z-index: 1;
-            pointer-events: none; /* Allows clicks to go directly to the letter */
+            pointer-events: none;
         }
 
         .page-left {
             border-radius: 8px 0 0 8px;
-            overflow: visible; /* Prevents letter pop-out from clipping */
+            overflow: visible;
         }
 
         .page-right {
@@ -143,7 +141,7 @@
             padding-bottom: 15px;
         }
 
-        /* Letter & Envelope Pop-Out Fix */
+        /* Letter & Envelope Setup */
         .envelope-click-area {
             position: absolute;
             width: 75%;
@@ -173,28 +171,9 @@
             filter: drop-shadow(0 6px 15px rgba(0,0,0,0.4));
         }
 
-        /* Smooth pop out translation */
         .envelope-click-area.open .letter-container {
             transform: translateY(-50%) scale(1.2);
             z-index: 50;
-        }
-
-        .click-tag {
-            position: absolute;
-            bottom: 4%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 0.6rem;
-            font-weight: bold;
-            z-index: 60;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            text-align: center;
-            white-space: nowrap;
-            user-select: none;
         }
 
         /* Candle & Flame Setup */
@@ -348,8 +327,6 @@
                             <img class="letter-img" src="./3[1].png" alt="Birthday Letter">
                         </div>
                     </div>
-
-                    <div class="click-tag" id="clickTag">CLICK LETTER TO OPEN / CLOSE</div>
                 </div>
 
                 <!-- RIGHT PAGE: CAKE & CANDLES -->
@@ -390,7 +367,6 @@
         const cardCover = document.getElementById('cardCover');
         const backBtn = document.getElementById('backBtn');
         const envelopeClickArea = document.getElementById('envelopeClickArea');
-        const clickTag = document.getElementById('clickTag');
 
         const flames = [
             document.getElementById('flame1'), 
@@ -425,7 +401,6 @@
         };
 
         envelopeClickArea.addEventListener('click', toggleLetter);
-        clickTag.addEventListener('click', toggleLetter);
 
         async function initMic() {
             if (audioCtx) return;
